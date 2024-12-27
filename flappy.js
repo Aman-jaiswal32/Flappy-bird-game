@@ -66,7 +66,7 @@ window.onload = function(){
     setInterval(animatebird, 200);
 
     document.addEventListener("keydown", movebird);
-    board.addEventListener("touchstart", movebirdTouch);
+    board.addEventListener("touchstart", movebirdTouch, { passive: false }); 
 }
 
 function update(){
@@ -163,22 +163,17 @@ function movebird(e){
     }
 
     if (gameover) {
-        bird.y = birdY;
-        pipeArray = [];
-        score = 0;
-        gameOver = false;
+        resetGame();
     }
 }
 
 function movebirdTouch(e){
     // Touch event: Perform the same action as spacebar
+    e.preventDefault(); 
     velocityy = -6;
 
     if (gameover) {
-        bird.y = birdY;
-        pipeArray = [];
-        score = 0;
-        gameOver = false;
+        resetGame();
     }
 }
 
@@ -187,4 +182,11 @@ function detect(a,b){
     a.x + a.width > b.x &&   //a's top right corner passes b's top left corner
     a.y < b.y + b.height &&  //a's top left corner doesn't reach b's bottom left corner
     a.y + a.height > b.y;    //a's bottom left corner passes b's top left corner
+}
+
+function resetGame() {
+    bird.y = birdy; // Reset bird's position
+    pipeArray = []; // Clear pipes
+    score = 0; // Reset score
+    gameover = false; // Restart the game
 }
