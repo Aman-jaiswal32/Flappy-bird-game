@@ -37,6 +37,8 @@ let score = 0;
 
 window.onload = function(){
     board = document.getElementById("board");
+    boardwidth = Math.min(window.innerWidth, 600); // Limit max width for scaling
+    boardheight = Math.min(window.innerHeight, 640); // Limit max height for scaling
     board.height = boardheight;
     board.width = boardwidth;
     context = board.getContext("2d"); //function for canvas element 
@@ -47,6 +49,11 @@ window.onload = function(){
     // birdimg.onload = function(){
     //     context.drawImage(birdimg, bird.x, bird.y, bird.width, bird.height);
     // }
+        // Adjust bird and pipe positions dynamically
+    birdx = boardwidth / 8;
+    birdy = boardheight / 2;
+    bird = { x: birdx, y: birdy, width: birdwidth, height: birdheight };
+    pipex = boardwidth;
 
     for(let i = 0;i < 4;i++){
         let birdimg = new Image();
@@ -114,7 +121,7 @@ function update(){
     context.fillText(score, 5, 45);
 
     if (gameover) {
-        context.fillText("GAME OVER", 180, 320);
+        context.fillText("GAME OVER", boardwidth / 4, boardheight / 2);
     }
 
 }
